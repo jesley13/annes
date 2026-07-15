@@ -171,10 +171,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
             <p className="text-xs text-muted">Next closest celebrations later in the year</p>
           </div>
           <button
-            onClick={() => onViewChange('months')}
+            onClick={() => onViewChange('calendar')}
             className="btn btn-secondary text-xs px-3 py-1.5 flex items-center gap-1 text-purple-400 hover:border-purple-500/40"
           >
-            <span>View All 12 Months</span>
+            <span>View Calendar Grid</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

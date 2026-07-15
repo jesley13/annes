@@ -9,7 +9,7 @@ export interface Celebration {
   rawDate: string;
 }
 
-export type ViewMode = 'dashboard' | 'calendar' | 'months';
+export type ViewMode = 'dashboard' | 'calendar';
 
 export type FilterCategory = 'all' | 'Birthday' | 'Wedding Anniversary';
 

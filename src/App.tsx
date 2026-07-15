@@ -4,7 +4,6 @@ import { Navbar } from './components/Navbar';
 import { SearchBarAndFilters } from './components/SearchBarAndFilters';
 import { DashboardView } from './components/DashboardView';
 import { CalendarView } from './components/CalendarView';
-import { MonthByMonthView } from './components/MonthByMonthView';
 import { UpdateDataModal } from './components/UpdateDataModal';
 import { ViewMode } from './types/celebration';
 
@@ -29,10 +28,6 @@ export const MainContent: React.FC = () => {
 
         {currentView === 'calendar' && (
           <CalendarView />
-        )}
-
-        {currentView === 'months' && (
-          <MonthByMonthView />
         )}
       </main>
 
