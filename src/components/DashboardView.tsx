@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Sparkles, Calendar, Gift, Heart, ArrowRight, PartyPopper } from 'lucide-react';
+import { ArrowRight, PartyPopper } from 'lucide-react';
 import { useCelebrations } from '../context/CelebrationContext';
 import { CelebrationCard } from './CelebrationCard';
 import { ViewMode } from '../types/celebration';
@@ -95,32 +95,26 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
         </div>
       )}
 
-      {/* This Week Spotlight (If no one today, or below today) */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
-              ✨
+      {/* This Week Spotlight (Only shown if celebrations exist within next 7 days) */}
+      {thisWeekCelebrations.length > 0 && (
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
+                ✨
+              </div>
+              <div>
+                <h2 className="text-lg sm:text-xl font-bold text-main tracking-tight">
+                  This Week's Celebrations
+                </h2>
+                <p className="text-xs text-muted">Happening within the next 7 days</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-lg sm:text-xl font-bold text-main tracking-tight">
-                This Week's Celebrations
-              </h2>
-              <p className="text-xs text-muted">Happening within the next 7 days</p>
-            </div>
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-tertiary border border-border text-purple-400">
+              {thisWeekCelebrations.length} upcoming
+            </span>
           </div>
-          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-tertiary border border-border text-purple-400">
-            {thisWeekCelebrations.length} upcoming
-          </span>
-        </div>
 
-        {thisWeekCelebrations.length === 0 ? (
-          <div className="glass-panel p-8 text-center border border-dashed border-border/80">
-            <Sparkles className="w-8 h-8 text-muted mx-auto mb-2 opacity-50" />
-            <p className="text-sm font-semibold text-main">No celebrations in the next 7 days</p>
-            <p className="text-xs text-muted">Check out the upcoming events below or browse the full calendar.</p>
-          </div>
-        ) : (
           <div className="grid grid-cols-auto">
             {thisWeekCelebrations.map(c => (
               <CelebrationCard
@@ -132,34 +126,29 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
               />
             ))}
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
-      {/* Next 30 Days Section */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
-              📅
+      {/* Next 30 Days Section (Only shown if celebrations exist in the 8-30 day window) */}
+      {next30DaysCelebrations.length > 0 && (
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+                📅
+              </div>
+              <div>
+                <h2 className="text-lg sm:text-xl font-bold text-main tracking-tight">
+                  Upcoming Next 30 Days
+                </h2>
+                <p className="text-xs text-muted">Plan your wishes and reminders ahead of time</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-lg sm:text-xl font-bold text-main tracking-tight">
-                Upcoming Next 30 Days
-              </h2>
-              <p className="text-xs text-muted">Plan your wishes and reminders ahead of time</p>
-            </div>
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-tertiary border border-border text-amber-400">
+              {next30DaysCelebrations.length} upcoming
+            </span>
           </div>
-          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-tertiary border border-border text-amber-400">
-            {next30DaysCelebrations.length} upcoming
-          </span>
-        </div>
 
-        {next30DaysCelebrations.length === 0 ? (
-          <div className="glass-panel p-8 text-center border border-dashed border-border/80">
-            <Calendar className="w-8 h-8 text-muted mx-auto mb-2 opacity-50" />
-            <p className="text-sm font-semibold text-main">No celebrations scheduled in the next 30 days</p>
-          </div>
-        ) : (
           <div className="grid grid-cols-auto">
             {next30DaysCelebrations.map(c => (
               <CelebrationCard
@@ -171,8 +160,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
               />
             ))}
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
       {/* Further Out / Next Up Highlights */}
       <section className="pt-4 border-t border-border/60">
