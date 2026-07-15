@@ -27,8 +27,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
   });
 
   const todayCelebrations = activeList.filter(c => c.isToday);
-  const thisWeekCelebrations = activeList.filter(c => !c.isToday && c.daysRemaining <= 7);
-  const next30DaysCelebrations = activeList.filter(c => c.daysRemaining > 7 && c.daysRemaining <= 30);
+  const upcoming30DaysCelebrations = activeList.filter(c => !c.isToday && c.daysRemaining <= 30);
   const furtherOutCelebrations = activeList.filter(c => c.daysRemaining > 30).slice(0, 8);
 
   const triggerConfetti = () => {
@@ -95,62 +94,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
         </div>
       )}
 
-      {/* This Week Spotlight (Only shown if celebrations exist within next 7 days) */}
-      {thisWeekCelebrations.length > 0 && (
+      {/* Upcoming 30 Days Events (Shown cleanly by default without extra section headers) */}
+      {upcoming30DaysCelebrations.length > 0 && (
         <section>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
-                ✨
-              </div>
-              <div>
-                <h2 className="text-lg sm:text-xl font-bold text-main tracking-tight">
-                  This Week's Celebrations
-                </h2>
-                <p className="text-xs text-muted">Happening within the next 7 days</p>
-              </div>
-            </div>
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-tertiary border border-border text-purple-400">
-              {thisWeekCelebrations.length} upcoming
-            </span>
-          </div>
-
           <div className="grid grid-cols-auto">
-            {thisWeekCelebrations.map(c => (
-              <CelebrationCard
-                key={c.id}
-                celebration={c}
-                daysRemaining={c.daysRemaining}
-                isToday={c.isToday}
-                turningMilestone={c.turningMilestone}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Next 30 Days Section (Only shown if celebrations exist in the 8-30 day window) */}
-      {next30DaysCelebrations.length > 0 && (
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
-                📅
-              </div>
-              <div>
-                <h2 className="text-lg sm:text-xl font-bold text-main tracking-tight">
-                  Upcoming Next 30 Days
-                </h2>
-                <p className="text-xs text-muted">Plan your wishes and reminders ahead of time</p>
-              </div>
-            </div>
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-tertiary border border-border text-amber-400">
-              {next30DaysCelebrations.length} upcoming
-            </span>
-          </div>
-
-          <div className="grid grid-cols-auto">
-            {next30DaysCelebrations.map(c => (
+            {upcoming30DaysCelebrations.map(c => (
               <CelebrationCard
                 key={c.id}
                 celebration={c}
