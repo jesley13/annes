@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Sparkles, Calendar as CalendarIcon, UploadCloud, Sun, Moon } from 'lucide-react';
+import React from 'react';
+import { Sparkles, Calendar as CalendarIcon, UploadCloud } from 'lucide-react';
 import { ViewMode } from '../types/celebration';
 import { useCelebrations } from '../context/CelebrationContext';
 
@@ -11,20 +11,6 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange, onOpenUploadModal }) => {
   const { stats } = useCelebrations();
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    return document.documentElement.classList.contains('dark');
-  });
-
-  const toggleTheme = () => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.remove('dark');
-      setIsDark(false);
-    } else {
-      root.classList.add('dark');
-      setIsDark(true);
-    }
-  };
 
   return (
     <header className="sticky top-0 z-40 glass-panel border-b border-white/10 mx-4 mt-4 mb-6 shadow-lg py-3 px-4 md:px-6">
@@ -44,7 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange, onOpe
           </p>
         </div>
 
-        {/* Actions (Upload Excel & Theme Toggle) */}
+        {/* Actions (Upload Excel) */}
         <div className="flex items-center gap-2.5">
           <button
             onClick={onOpenUploadModal}
@@ -53,15 +39,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange, onOpe
             aria-label="Upload Excel"
           >
             <UploadCloud className="w-4 h-4 group-hover:scale-110 transition-transform" />
-          </button>
-
-          <button
-            onClick={toggleTheme}
-            className="p-2.5 rounded-xl bg-tertiary border border-border text-muted hover:text-main hover:bg-secondary transition-all"
-            title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            aria-label="Toggle Theme"
-          >
-            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-purple-600" />}
           </button>
         </div>
       </div>

@@ -48,10 +48,12 @@ export const CelebrationCard: React.FC<CelebrationCardProps> = ({
       try {
         const blob = await generateWishCanvasBlob(celebration);
         if (blob) {
+          const prefix = celebration.event === 'Birthday' ? 'BD' : 'WA';
+          const cleanName = celebration.name.replace(/[^a-zA-Z0-9]/g, '_');
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `${celebration.name.replace(/[^a-zA-Z0-9]/g, '_')}_WishCard.png`;
+          a.download = `${prefix}_${cleanName}.png`;
           a.click();
           URL.revokeObjectURL(url);
           setIsCopied(true);
